@@ -14,22 +14,23 @@ html, body {
 	text-align: center;
 
 }
-.board {
+.gameboard {
 	margin: auto;
 	border: 1px solid black;
 	height: 306px;
 	width: 306px;
 }
-.box0, .box1, .box2, .box3, .box4, .box5, .box6, .box7, .box8 {
+.cells {
 	height: 100px;
 	width: 100px;
 	border: 1px solid black;
 	float: left;
-
+}
+.clear {
+	clear:both;
 }
 .red {
-	max-width: 100px;
-    max-height: 100px;
+
     background-image: url(/Users/bobbyfisher/TTT/images/picX.png);
 
 }
