@@ -15,6 +15,7 @@ app.controller("myController", function ($scope) {
     {number: 7}, 
     {number: 8}, 
     ]; //end of boxes array
+    
   $scope.winningArrays = [
     [0,1,2],
     [3,4,5],
@@ -38,19 +39,26 @@ app.controller("myController", function ($scope) {
   $scope.toggleCustom = function() {
     $scope.toggle = $scope.toggle === false ? true: false;
     console.log($scope.toggle);
-  }; //end of toggle 
+  }; //end of toggle switch
+
+
 
   $scope.logClick = function(thisCell) {
-    if ($scope.toggle === true) {
-      $scope.playerLog1.push(thisCell.number);
-      console.log(thisCell.number);
-      console.log($scope.playerLog1);
-    }
-    else{
-      $scope.playerLog2.push(thisCell.number);
-      console.log(thisCell.number);
-      console.log($scope.playerLog2);
+    while (typeof thisCell.number == "number") {
+      $scope.toggleCustom();//runs toggle switch while its a number
 
+      if ($scope.toggle === true) {
+        $scope.playerLog1.push(thisCell.number);
+        console.log(thisCell.number);
+        console.log($scope.playerLog1);
+        thisCell.number = "x";//  this is logging player 1
+      }
+      else {
+        $scope.playerLog2.push(thisCell.number);
+        console.log(thisCell.number);
+        console.log($scope.playerLog2);
+        thisCell.number = "x";//  this is logging player 2 moves
+      }
     }
   };
 
