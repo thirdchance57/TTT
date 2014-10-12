@@ -29,8 +29,57 @@ html, body {
 .clear {
 	clear:both;
 }
-.red {
-
-    background-image: url(/Users/bobbyfisher/TTT/images/picX.png);
-
+.wrapper2{
+	margin: auto;
+	border:1px solid black;
+	height: 200px;
+	width: 400px;
+}
+.player1 {
+	height: 100px;
+	width: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	float: left;
+}
+.player2 {
+	height: 100px;
+	width: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	float: right;
+}
+.wrapper3 {
+	margin: auto;
+	border:1px solid black;
+	height: 100px;
+	width: 800px;
+}
+.weapon1 {
+	height: 100px;
+	width: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	float: left;
+}
+.weapon2 {
+	height: 100px;
+	width: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	float: left;
+}
+.weapon3 {
+	height: 100px;
+	width: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	float: right;
+}
+.weapon4{
+	height: 100px;
+	width: 100px;
+	border: 1px solid black;
+	display: inline-block;
+	float: right;
 }
