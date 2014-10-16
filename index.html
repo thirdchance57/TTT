@@ -2,8 +2,17 @@
 <html ng-app="MyApp">
 <head>
 	<meta charset="UTF-8">
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>	
+	<!-- Normalize CSS -->
+    <link rel="stylesheet" src="https://normalize-css.googlecode.com/svn/trunk/normalize.min.css">
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.19/angular.min.js"></script> 
+    <!-- Firebase -->
+    <script src="https://cdn.firebase.com/js/client/1.0.21/firebase.js"></script>
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/0.7.1/angularfire.min.js"></script>
+    <!-- App javascript -->
 	<script type="text/javascript" src="js/main.js"></script>
+	<!-- CSS link -->
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
 	<title>TIC TAC TOE</title>
@@ -11,22 +20,30 @@
 <body>
 {{"Working"}} <!-- testing angular app -->
 
-	<div class="wrapper" ng-controller="myController">
+	<div class="wrapper" ng-controller="TTTmyController" ng-model="gameContainer">
 		
-		<div class="head">TIC TAC TOE</div> <!-- game title -->
+		<div class="head">TIC TAC TOE</div> <!-- game header title -->
 
-		<div class="gameboard"> <!-- game board and cells div  -->
-			<div class="cells" ng-click="logClick(c)" ng-repeat="c in boxes" ng-class="{oclass: c.number=='O', xclass: c.number=='X', blueclass: c.number=='B'}">
+		<div class="gameboard" > <!-- game board and cells div  -->
+			<div class="cells" ng-click="logClick(c)" 
+			ng-repeat="c in gameContainer.boxesArray" 
+			ng-class="{oclass: c.number=='O', xclass: c.number=='X'}">
+
 				{{c.number}} <!-- testing angular controller -->
 			</div>
 		</div>
 
-		<div class="wrapper2"> <!-- player's selected weapons -->
-			<div ng-class="{oclass: playerPic1=='O', xclass: playerPic1=='X', blueclass: playerPic1=='B'}" class="player1"></div>
-			<div ng-class="{oclass: playerPic2=='O', xclass: playerPic2=='X', blueclass: playerPic2=='B'}" class="player2"></div>
+		<div class="wrapper2"> <!-- selected teachers -->
+
+			<div ng-class="{oclass: playerPic1=='O', xclass: playerPic1=='X'}" 
+			class="player1"></div>
+
+			<div ng-class="{oclass: playerPic2=='O', xclass: playerPic2=='X'}" 
+			class="player2"></div>
+
 		</div>
 
-		<div class="wrapper3"> <!-- weapons to choose from -->
+		<div class="wrapper3"> <!-- teachers to choose from -->
 			<div class="weapons" ng-click="playerSelect(i)" ng-repeat="i in pictures">
 				<img ng-src="{{i.photos}}">
 			</div>

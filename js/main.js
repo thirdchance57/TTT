@@ -1,36 +1,17 @@
 console.log("main.js linked") ; //js conneciton tester
 
 
-var app = angular.module('MyApp', []);
-  
-// app.directive('ourRating', function () {
-//   return {
-//     template: '<ul class="rating">' +
-//                 '<li ng-repeat="star in stars" class="filled">' +
-//                     '\u2605' +
-//                 '</li>' +
-//               '</ul>',
+var app = angular.module('MyApp', ["firebase"]);
+app.controller("TTTmyController", function ($scope, $firebase) {
 
-//     restrict: 'A',
-//     scope: {
-//       ratingValue: '='
-//     },
-//     link: function (scope, elem, attrs) {
-//       console.log(scope.ratingValue, scope, elem, attrs);
-//       scope.stars = [];
-//       for (var i = 0; i < scope.ratingValue; i++) {
-//         scope.stars.push({});
-//       }
-//     }
-//   };
-// });//end of directive
-
-app.controller("myController", function ($scope) {
-// var promise = $http.get("https://api.github.com/repos/lorint/AndrewIG/issues");
-//   promise.success(function(data){
-//     $scope.issues = data;
-//   });
+  $scope.remoteGameContainer = $firebase(new Firebase("https://ttt-ez.firebaseIO.com/databaseGameContainer"));
   
+  $scope.toggle = false ;
+  $scope.toggleCustom = function() {
+    $scope.toggle = $scope.toggle === false ? true: false;
+    console.log($scope.toggle);
+  }; //end of toggle switch
+
   $scope.boxes = [
     {number: 0},
     {number: 1},
@@ -43,17 +24,46 @@ app.controller("myController", function ($scope) {
     {number: 8},
   ]; //end of boxes array
 
+
+  // This container object is what gets synced:
+  $scope.gameContainer = {
+    boxesArray: $scope.boxes,
+    toggleSwitch: $scope.toggle,
+
+  };
+
+  // Everywhere else in your program, use $scope.gameContainer.cellListArray instead of cellList.
+  // Everywhere else in your program, use $scope.gameContainer.clickCounter instead of clickCount.
+  // Make that change in your ng-repeat as well and anywhere in your index.html as needed.
+
+
+  // remoteGameContainer: that is the name you gave the Firebase collection (looks like a folder in Firebase).
+  // The bind statement creates a connection between anything in your app and the Firebase connection we just created.
+   
+  $scope.remoteGameContainer.$bind($scope, "gameContainer") ;
+
+ // The bind statement will automatically update your model, in this case cellList, whenever it 
+  // changes on Firebase.  But this will not trigger an Angular update of the interface (index.html)
+  // - we've been relying on the ng-click to wake up Angular and get the gameboard refreshed.
+  // So we put a watch on cellList - this tells Angular to refresh the interface elements, ie ng-class,
+  // whenever the model, in this case celList, changes.
+  $scope.$watch('gameContainer', function() {
+    console.log('gameContainer changed!') ;
+  }) ;
+
+  $scope.playerPic1 = [];// selected players icon
+  $scope.playerPic2 = [];
+
   $scope.playerLog1 = []; // player 1 choices
   $scope.playerLog2 = []; // player 2 choices
 
-  $scope.playerPic1 = [];
-  $scope.playerPic2 = [];
-
   $scope.pictures = [
-    {photos: 'images/picX.png', picLable: "X"},
-    {photos: 'images/picO.jpeg', picLable: "O"},
-    {photos: 'images/picO.jpeg', picLable: "B"}
+  {photos: 'images/picX.png', picLable: "X"},
+  {photos: 'images/picO.jpeg', picLable: "O"}
   ]; //end of possible images selections
+
+
+
 
   $scope.playerSelect = function(thisPic) {
     while(true) {
@@ -74,11 +84,6 @@ app.controller("myController", function ($scope) {
   };
 
 
-  $scope.toggle = false ;
-  $scope.toggleCustom = function() {
-    $scope.toggle = $scope.toggle === false ? true: false;
-    console.log($scope.toggle);
-  }; //end of toggle switch
 
   $scope.logClick = function(thisCell) {
     if (typeof thisCell.number == "number") {
@@ -98,45 +103,53 @@ app.controller("myController", function ($scope) {
         console.log($scope.playerLog2);
         thisCell.number = $scope.playerPic2[0];
         $scope.winningFunction($scope.playerLog2);
-//  end of logging player 2 selections
+        //  end of logging player 2 selections
       }
     }
   };//   end of click log function 
 
   $scope.winningFunction = function(moves) {
     var winningArrays = [
-        [0,1,2],
-        [3,4,5],
-        [6,7,8],
-        [0,3,6],
-        [1,4,7],
-        [2,5,8],
-        [0,4,8],
-        [6,4,2]
-      ]; // end of possible winning combos winningArrays
-    for(var i = 0; i < winningArrays.length; ++i) {
+      [0,1,2],
+      [3,4,5],
+      [6,7,8],
+      [0,3,6],
+      [1,4,7],
+      [2,5,8],
+      [0,4,8],
+      [6,4,2]
+    ]; // end of possible winning combos winningArrays
+
+    for(var i = 0; i < winningArrays.length; ++i) {//loops through the 8 arrays
       var howManyMatches = 0;
       var thisWinner = winningArrays[i];
-      for (var j = 0; j < thisWinner.length; j++) {
-        for (var m = 0; m < moves.length; m++) {
-          if (moves[m] == thisWinner[j]) {
+      for (var j = 0; j < thisWinner.length; j++) {// loops through each number of each array
+        for (var m = 0; m < moves.length; m++) {// loops through the players moves thusfar
+          if (moves[m] == thisWinner[j]) {// if player moves matches with a win condition, we run the counter
             console.log("Match - ", thisWinner, moves[m]);
             howManyMatches++;
             break;
           }
         }
       }
-      if(howManyMatches == 3) {
-        console.log("win!!!!!!!!!!!!");
+      if(howManyMatches == 3) {// does the total matches reach 3?
+        if ($scope.toggle === true) {
+          $scope.callWinner1();
+        }
+        else {
+          $scope.callWinner2();
+        }
       }
     }
-  };
+  };//end of winningFunction for loop
 
   $scope.callWinner1 = function() {
     console.log("Winnng Combo 1") ;
   };//end of call winner player 1 function
-  
-  // winningFunction($scope.playerLog2);
 
+  $scope.callWinner2 = function() {
+    console.log("Winnng Combo 2") ;
+  };//end of call winner player 2 function
+  
 }); //end of controller 
 
