@@ -9,21 +9,27 @@
 	<title>TIC TAC TOE</title>
 </head>
 <body>
-{{"Working"}}
+{{"Working"}} <!-- testing angular app -->
+
 	<div class="wrapper" ng-controller="myController">
 		
-		<div class="head">TIC TAC TOE</div>
-		<div class="gameboard">
-			<div class="cells" ng-click="logClick(c)" ng-repeat="c in boxes" ng-class="{oclass: c.number=='O', xclass: c.number=='X'}">
-				{{c.number}} <!-- testing angular app -->
+		<div class="head">TIC TAC TOE</div> <!-- game title -->
+
+		<div class="gameboard"> <!-- game board and cells div  -->
+			<div class="cells" ng-click="logClick(c)" ng-repeat="c in boxes" ng-class="{oclass: c.number=='O', xclass: c.number=='X', blueclass: c.number=='B'}">
+				{{c.number}} <!-- testing angular controller -->
 			</div>
 		</div>
-		<div class="wrapper2">
-			<div class="player1">PLAYER 1</div>
-			<div class="player2">PLAYER 2</div>
+
+		<div class="wrapper2"> <!-- player's selected weapons -->
+			<div ng-class="{oclass: playerPic1=='O', xclass: playerPic1=='X', blueclass: playerPic1=='B'}" class="player1"></div>
+			<div ng-class="{oclass: playerPic2=='O', xclass: playerPic2=='X', blueclass: playerPic2=='B'}" class="player2"></div>
 		</div>
-		<div class="wrapper3">
-			<div class="weapons" ng-repeat="p in pictures">{{test}}</div>
+
+		<div class="wrapper3"> <!-- weapons to choose from -->
+			<div class="weapons" ng-click="playerSelect(i)" ng-repeat="i in pictures">
+				<img ng-src="{{i.photos}}">
+			</div>
 		</div>
 		<!-- <select x-ng-model="rateMe">
 			<option value="1">1</option>

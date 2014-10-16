@@ -2,6 +2,10 @@ html, body {
 	height: 100%;
 
 }
+img {
+	max-width: 100px;
+	max-height: 100px;
+}
 .wrapper {
 	height: 100%;
 	border: 1px solid black;
@@ -58,9 +62,6 @@ html, body {
 .weapons {
 	height: 100px;
 	width: 100px;
-	/*background-image: url(../images/picX.png);*/
-	background-size: 100px;
-	background-repeat: no-repeat;
 	background-position: center;
 	border: 1px solid black;
 	display: inline-block;
@@ -74,6 +75,13 @@ html, body {
 }
 .oclass {
 	background-image: url(../images/picO.jpeg);
+	background-size: 100px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.blueclass {
+/*	background-image: url(../images/picO.jpeg);*/
+	background-color: blue;
 	background-size: 100px;
 	background-repeat: no-repeat;
 	background-position: center;

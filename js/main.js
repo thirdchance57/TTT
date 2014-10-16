@@ -43,24 +43,36 @@ app.controller("myController", function ($scope) {
     {number: 8},
   ]; //end of boxes array
 
-  $scope.winningArrays = [
-    [0,1,2],
-    [3,4,5],
-    [6,7,8],
-    [0,3,6],
-    [1,4,7],
-    [2,5,8],
-    [0,4,8],
-    [6,4,2]
-  ]; // end of possible winning combos winningArrays
-
   $scope.playerLog1 = []; // player 1 choices
   $scope.playerLog2 = []; // player 2 choices
 
+  $scope.playerPic1 = [];
+  $scope.playerPic2 = [];
+
   $scope.pictures = [
-    { "src": "../images/picX.png"},
-    { "src": "../images/picO.png"}
-  ]; //end of images array
+    {photos: 'images/picX.png', picLable: "X"},
+    {photos: 'images/picO.jpeg', picLable: "O"},
+    {photos: 'images/picO.jpeg', picLable: "B"}
+  ]; //end of possible images selections
+
+  $scope.playerSelect = function(thisPic) {
+    while(true) {
+      $scope.toggleCustom();//runs toggle switch while its a number
+      if ($scope.toggle === true ) {
+        $scope.playerPic1.push(thisPic.picLable);
+        console.log("player 1 selected ");
+        console.log($scope.playerPic1);
+
+      }
+      else {
+        $scope.playerPic2.push(thisPic.picLable);
+        console.log("player 2 selected ");
+        console.log($scope.playerPic2);
+      }
+    break;
+    }
+  };
+
 
   $scope.toggle = false ;
   $scope.toggleCustom = function() {
@@ -69,45 +81,54 @@ app.controller("myController", function ($scope) {
   }; //end of toggle switch
 
   $scope.logClick = function(thisCell) {
-    while (typeof thisCell.number == "number") {
+    if (typeof thisCell.number == "number") {
       $scope.toggleCustom();//runs toggle switch while its a number
 
       if ($scope.toggle === true) {//beginning of player 1 logic
         $scope.playerLog1.push(thisCell.number);
         console.log(thisCell.number);
         console.log($scope.playerLog1);
-        thisCell.number = "X";
+        thisCell.number = $scope.playerPic1[0];
         $scope.winningFunction($scope.playerLog1);
-
-
-
       }//  end of logging player 1 selections
 
       else {//   beginning of player 2 logic
         $scope.playerLog2.push(thisCell.number);
         console.log(thisCell.number);
         console.log($scope.playerLog2);
-        thisCell.number = "O";//  end of logging player 2 selections
+        thisCell.number = $scope.playerPic2[0];
+        $scope.winningFunction($scope.playerLog2);
+//  end of logging player 2 selections
       }
     }
   };//   end of click log function 
 
   $scope.winningFunction = function(moves) {
-    for (var i = 0; i < $scope.winningArrays.length; ++i); {
+    var winningArrays = [
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [6,4,2]
+      ]; // end of possible winning combos winningArrays
+    for(var i = 0; i < winningArrays.length; ++i) {
       var howManyMatches = 0;
-      var thisWinner = $scope.winningArrays[i];
+      var thisWinner = winningArrays[i];
       for (var j = 0; j < thisWinner.length; j++) {
-      //   for (var m = 0; m < moves.length; m++) {
-      //     if (moves[m] == thisWinner[j]) {
-      //       console.log("Match - ", thisWinner, moves[m]);
-      //       howManyMatches++;
-      //       break;
-      //     }
-      //   }
+        for (var m = 0; m < moves.length; m++) {
+          if (moves[m] == thisWinner[j]) {
+            console.log("Match - ", thisWinner, moves[m]);
+            howManyMatches++;
+            break;
+          }
+        }
       }
-      // if(howManyMatches == 3) {
-      //   console.log("win!!!!!!!!!!!!");
-      // }
+      if(howManyMatches == 3) {
+        console.log("win!!!!!!!!!!!!");
+      }
     }
   };
 
