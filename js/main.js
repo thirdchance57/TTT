@@ -7,11 +7,7 @@ app.controller("TTTmyController", function ($scope, $firebase) {
   $scope.remoteGameContainer = $firebase(new Firebase("https://ttt-ez.firebaseIO.com/databaseGameContainer"));
   
   $scope.toggle = false ;
-  $scope.toggleCustom = function() {
-    $scope.toggle = $scope.toggle === false ? true: false;
-    console.log($scope.toggle);
-  }; //end of toggle switch
-
+ 
   $scope.boxes = [
     {number: 0},
     {number: 1},
@@ -62,47 +58,48 @@ app.controller("TTTmyController", function ($scope, $firebase) {
   {photos: 'images/picO.jpeg', picLable: "O"}
   ]; //end of possible images selections
 
-
+ $scope.toggleCustom = function() {
+    $scope.gameContainer.toggleSwitch = $scope.gameContainer.toggleSwitch === false ? true: false;
+    console.log($scope.gameContainer.toggleSwitch);
+  }; //end of toggle switch
 
 
   $scope.playerSelect = function(thisPic) {
-    while(true) {
-      $scope.toggleCustom();//runs toggle switch while its a number
-      if ($scope.toggle === true ) {
+    if ($scope.playerPic1.length === 0 || $scope.playerPic2.length === 0) {
+      if ($scope.gameContainer.toggleSwitch === false ) {
         $scope.playerPic1.push(thisPic.picLable);
-        console.log("player 1 selected ");
-        console.log($scope.playerPic1);
+        console.log($scope.playerPic1.length);
+        $scope.toggleCustom();//runs toggle switch while its a number
+
 
       }
       else {
         $scope.playerPic2.push(thisPic.picLable);
-        console.log("player 2 selected ");
-        console.log($scope.playerPic2);
+        console.log($scope.playerPic2.length);
+        $scope.toggleCustom();//runs toggle switch while its a number
       }
-    break;
     }
   };
 
-
-
-  $scope.logClick = function(thisCell) {
-    if (typeof thisCell.number == "number") {
-      $scope.toggleCustom();//runs toggle switch while its a number
-
-      if ($scope.toggle === true) {//beginning of player 1 logic
+  $scope.logClick = function(thisCell) {// start of logging player 1 selections
+    if (typeof thisCell.number == "number" && $scope.playerPic2.length === 1) {
+      if ($scope.gameContainer.toggleSwitch === false) {//beginning of player 1 logic
         $scope.playerLog1.push(thisCell.number);
         console.log(thisCell.number);
         console.log($scope.playerLog1);
         thisCell.number = $scope.playerPic1[0];
         $scope.winningFunction($scope.playerLog1);
+        $scope.toggleCustom();
       }//  end of logging player 1 selections
 
-      else {//   beginning of player 2 logic
+      else {//   beginning of player 2 logs
         $scope.playerLog2.push(thisCell.number);
         console.log(thisCell.number);
         console.log($scope.playerLog2);
         thisCell.number = $scope.playerPic2[0];
         $scope.winningFunction($scope.playerLog2);
+        $scope.toggleCustom();
+
         //  end of logging player 2 selections
       }
     }
@@ -110,14 +107,14 @@ app.controller("TTTmyController", function ($scope, $firebase) {
 
   $scope.winningFunction = function(moves) {
     var winningArrays = [
-      [0,1,2],
-      [3,4,5],
-      [6,7,8],
-      [0,3,6],
-      [1,4,7],
-      [2,5,8],
-      [0,4,8],
-      [6,4,2]
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [6, 4, 2]
     ]; // end of possible winning combos winningArrays
 
     for(var i = 0; i < winningArrays.length; ++i) {//loops through the 8 arrays
@@ -133,7 +130,7 @@ app.controller("TTTmyController", function ($scope, $firebase) {
         }
       }
       if(howManyMatches == 3) {// does the total matches reach 3?
-        if ($scope.toggle === true) {
+        if ($scope.gameContainer.toggleSwitch === false) {
           $scope.callWinner1();
         }
         else {
@@ -144,11 +141,11 @@ app.controller("TTTmyController", function ($scope, $firebase) {
   };//end of winningFunction for loop
 
   $scope.callWinner1 = function() {
-    console.log("Winnng Combo 1") ;
+    console.log("Player 1 WINS!!!!!!!!!!!!!") ;
   };//end of call winner player 1 function
 
   $scope.callWinner2 = function() {
-    console.log("Winnng Combo 2") ;
+    console.log("Player 2 WINS!!!!!!!!!!!!!") ;
   };//end of call winner player 2 function
   
 }); //end of controller 
