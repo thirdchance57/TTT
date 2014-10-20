@@ -54,8 +54,15 @@ app.controller("TTTmyController", function ($scope, $firebase) {
   $scope.playerLog2 = []; // player 2 choices
 
   $scope.pictures = [
-  {photos: 'images/picX.png', picLable: "X"},
-  {photos: 'images/picO.jpeg', picLable: "O"}
+    {photos: 'images/picX.png', picLable: "X"},
+    {photos: 'images/picO.jpeg', picLable: "O"},
+    {photos: 'images/richard.jpg', picLable: "R"},
+    {photos: 'images/zach.jpg', picLable: "Z"},
+    {photos: 'images/lorin.jpg', picLable: "L"},
+    {photos: 'images/alfonzo.png', picLable: "F"},
+    {photos: 'images/grant.png', picLable: "G"},
+    {photos: 'images/meredith.jpeg', picLable: "M"},
+    {photos: 'images/alex.png', picLable: "A"}
   ]; //end of possible images selections
 
  $scope.toggleCustom = function() {
@@ -63,19 +70,18 @@ app.controller("TTTmyController", function ($scope, $firebase) {
     console.log($scope.gameContainer.toggleSwitch);
   }; //end of toggle switch
 
+  $scope.chooseProfessor = true;//ng-show var for "choose your pro text"
 
   $scope.playerSelect = function(thisPic) {
     if ($scope.playerPic1.length === 0 || $scope.playerPic2.length === 0) {
       if ($scope.gameContainer.toggleSwitch === false ) {
         $scope.playerPic1.push(thisPic.picLable);
-        console.log($scope.playerPic1.length);
         $scope.toggleCustom();//runs toggle switch while its a number
-
-
       }
+
       else {
         $scope.playerPic2.push(thisPic.picLable);
-        console.log($scope.playerPic2.length);
+        $scope.chooseProfessor = false;
         $scope.toggleCustom();//runs toggle switch while its a number
       }
     }
@@ -98,9 +104,7 @@ app.controller("TTTmyController", function ($scope, $firebase) {
         console.log($scope.playerLog2);
         thisCell.number = $scope.playerPic2[0];
         $scope.winningFunction($scope.playerLog2);
-        $scope.toggleCustom();
-
-        //  end of logging player 2 selections
+        $scope.toggleCustom();//  end of logging player 2 selections
       }
     }
   };//   end of click log function 
@@ -140,13 +144,118 @@ app.controller("TTTmyController", function ($scope, $firebase) {
     }
   };//end of winningFunction for loop
 
-  $scope.callWinner1 = function() {
-    console.log("Player 1 WINS!!!!!!!!!!!!!") ;
+    $scope.xxShow = false;
+    $scope.ooShow = false;
+    $scope.richShow = false;
+    $scope.zacShow = false;
+    $scope.loriShow = false;
+    $scope.alfoShow = false;
+    $scope.granShow = false;
+    $scope.alexShow = false;
+    $scope.meriShow = false;
+
+    $scope.callWinner1 = function() {
+      switch($scope.playerPic1[0]) {
+          case "X":
+              console.log("X WINS!!!!!!!!!!!!!");
+              $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "X WINS";
+              $scope.xxShow = true;
+              break;
+          case "O":
+              console.log($scope.playerPic1);
+              $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "O WINS";
+              $scope.ooShow = true;
+              break;
+          case "R":
+              console.log($scope.playerPic1);
+              $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "RICHARD WINS You know Steve Jobes";
+              $scope.richShow = true;
+              break;
+          case "Z":
+              console.log($scope.playerPic1);
+              $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "ZACH WINS Yeah Buddy";
+              $scope.zacShow = true;
+              break;
+          case "L":
+              console.log($scope.playerPic1);
+              $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "LORIN WINS !!!!!!!NICE";
+              $scope.loriShow = true;
+              break;
+          case "F":
+              console.log($scope.playerPic1);
+              $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "ALFONSO WINS Groovy Sauce";
+              $scope.alfoShow = true;
+              break;
+          case "G":
+              console.log($scope.playerPic1);
+              $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "GRANT WINS Test your code noobs";
+              $scope.granShow = true;
+              break;
+          case "A":
+              console.log($scope.playerPic1);
+              $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "ALEX WINS Eat your Garlic";
+              $scope.alexShow = true;
+              break;
+          case "M":
+              console.log($scope.playerPic1);
+              $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "MEREDITH WINS Yay for kitties";
+              $scope.meriShow = true;
+              break;
+          default :
+              console.log("default case switch")
+      }
   };//end of call winner player 1 function
 
-  $scope.callWinner2 = function() {
-    console.log("Player 2 WINS!!!!!!!!!!!!!") ;
-  };//end of call winner player 2 function
-  
+    $scope.callWinner2 = function() {
+        switch($scope.playerPic2[0]) {
+            case "X":
+                console.log("X WINS!!!!!!!!!!!!!");
+                $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "X WINS";
+                $scope.xxShow = true;
+                break;
+            case "O":
+                console.log($scope.playerPic2);
+                $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "O WINS";
+                $scope.ooShow = true;
+                break;
+            case "R":
+                console.log($scope.playerPic2);
+                $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "RICHARD WINS You know Steve Jobes";
+                $scope.richShow = true;
+                break;
+            case "Z":
+                console.log($scope.playerPic2);
+                $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "ZACH WINS Yeah Buddy";
+                $scope.zacShow = true;
+                break;
+            case "L":
+                console.log($scope.playerPic2);
+                $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "LORIN WINS !!!!!!!NICE";
+                $scope.loriShow = true;
+                break;
+            case "F":
+                console.log($scope.playerPic2);
+                $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "ALFONSO WINS Groovy Sauce";
+                $scope.alfoShow = true;
+                break;
+            case "G":
+                console.log($scope.playerPic2);
+                $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "GRANT WINS Test your code noobs";
+                $scope.granShow = true;
+                break;
+            case "A":
+                console.log($scope.playerPic2);
+                $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "ALEX WINS Eat your Garlic";
+                $scope.alexShow = true;
+                break;
+            case "M":
+                console.log($scope.playerPic2);
+                $scope.chat1 = document.getElementsByClassName("chat").innerHTML = "MEREDITH WINS Yay for kitties";
+                $scope.meriShow = true;
+                break;
+            default :
+                console.log("default case switch")
+        }
+    };//end of call winner player 2 function
 }); //end of controller 
 
