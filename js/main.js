@@ -55,14 +55,14 @@ app.controller("TTTmyController", function ($scope, $firebase) {
 
   $scope.pictures = [
     {photos: 'images/picX.png', picLable: "X"},
-    {photos: 'images/picO.jpeg', picLable: "O"},
     {photos: 'images/richard.jpg', picLable: "R"},
     {photos: 'images/zach.jpg', picLable: "Z"},
     {photos: 'images/lorin.jpg', picLable: "L"},
     {photos: 'images/alfonzo.png', picLable: "F"},
     {photos: 'images/grant.png', picLable: "G"},
     {photos: 'images/meredith.jpeg', picLable: "M"},
-    {photos: 'images/alex.png', picLable: "A"}
+    {photos: 'images/alex.png', picLable: "A"},
+      {photos: 'images/picO.png', picLable: "O"}
   ]; //end of possible images selections
 
  $scope.toggleCustom = function() {
@@ -202,7 +202,7 @@ app.controller("TTTmyController", function ($scope, $firebase) {
               $scope.meriShow = true;
               break;
           default :
-              console.log("default case switch")
+              console.log("default case switch");
       }
   };//end of call winner player 1 function
 
