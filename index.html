@@ -19,55 +19,51 @@
 </head>
 <body>
 	<div class="wrapper" ng-controller="TTTmyController" ng-model="gameContainer">
-		
-		<div class="head"><img src="images/gaicon.png"/>TIC TAC TOE
-        </div> <!-- game header title -->
-        <div class="gamechatcontainer">
-            <div class="chat2"> <!--start of div that helps center gameboard, on the left-->
-            </div>
-            <div class="chat"> <!--start of chat box, on the right-->
-                {{chat1}}<p ng-show="chooseProfessor">Choose your professor</p>
-            </div>
-            <div class="gameboard" > <!-- game board and cells div  -->
-                <img id="xx" ng-show="xxShow" src="images/bigpicX.png"/>
-                <img id="oo" ng-show="ooShow"src="images/bigpicO.png"/>
-                <img id="rich" ng-show="richShow" src="images/bigrichard.jpg"/>
-                <img id="zac" ng-show="zacShow" src="images/bigzach.jpg"/>
-                <img id="lori" ng-show="loriShow" src="images/biglorin.jpg"/>
-                <img id="alfo" ng-show="alfoShow" src="images/bigalfonzo.png"/>
-                <img id="gran" ng-show="granShow" src="images/biggrant.png"/>
-                <img id="meri" ng-show="meriShow" src="images/bigmeredith.jpeg"/>
-                <img id="alex" ng-show="alexShow" src="images/bigalex.png"/>
-                <div class="cells" ng-click="logClick(c)"
-                ng-repeat="c in gameContainer.boxesArray"
-                ng-class="{oclass: c.number=='O', xclass: c.number=='X', r: c.number=='R', z: c.number=='Z', l: c.number=='L', f: c.number=='F', g: c.number=='G', m: c.number=='M', a: c.number=='A'}">
-                </div>
-            </div> <!-- end of game board -->
+		<div class="head">
+      <img src="images/gaicon.png"/>TIC TAC TOE
+    </div> <!-- game header title -->
+    <div class="gamechatcontainer">
+      <div class="chat2"> <!--start of div that helps center gameboard, on the left-->
+      </div>
+      <div class="chat"> <!--start of chat box, on the right-->
+        {{chat1}}<p ng-show="chooseProfessor">Choose your professor</p>
+      </div>
 
+      <div class="gameboard" > <!-- game board and cells div  -->
+        <img id="xx" ng-show="xxShow" src="images/bigpicX.png"/>
+        <img id="oo" ng-show="ooShow"src="images/bigpicO.png"/>
+        <img id="rich" ng-show="richShow" src="images/bigrichard.jpg"/>
+        <img id="zac" ng-show="zacShow" src="images/bigzach.jpg"/>
+        <img id="lori" ng-show="loriShow" src="images/biglorin.jpg"/>
+        <img id="alfo" ng-show="alfoShow" src="images/bigalfonzo.png"/>
+        <img id="gran" ng-show="granShow" src="images/biggrant.png"/>
+        <img id="meri" ng-show="meriShow" src="images/bigmeredith.jpeg"/>
+        <img id="alex" ng-show="alexShow" src="images/bigalex.png"/>
+
+        <div class="cells" ng-click="logClick(c)"
+          ng-repeat="c in gameContainer.boxesArray"
+          ng-class="{oclass: c.number=='O', xclass: c.number=='X', r: c.number=='R', z: c.number=='Z', l: c.number=='L', f: c.number=='F', g: c.number=='G', m: c.number=='M', a: c.number=='A'}">
         </div>
-        <div class="bottom">
-            <div class="wrapper2"> <!-- selected teachers -->
-                <div ng-class="{oclass: playerPic1=='O', xclass: playerPic1=='X', r: playerPic1=='R', z:playerPic1=='Z', l:playerPic1=='L', f:playerPic1=='F', g:playerPic1=='G', m:playerPic1=='M', a:playerPic1=='A'}"
-                class="player1"></div>
-                VS
-                <div ng-class="{oclass: playerPic2=='O', xclass: playerPic2=='X', r: playerPic2=='R', z:playerPic2=='Z', l:playerPic2=='L', f:playerPic2=='F', g:playerPic2=='G', m:playerPic2=='M', a:playerPic2=='A'}"
-                class="player2"></div>
-            </div>
-
-            <div class="wrapper3"> <!-- teachers to choose from -->
-                <div class="weapons" ng-click="playerSelect(i)" ng-repeat="i in pictures">
-                    <img ng-src="{{i.photos}}">
-                </div>
-            </div>
+      </div> <!-- end of game board -->
+    </div>
+    <div class="bottom">
+      <div class="wrapper2"> <!-- selected teachers -->
+        <div class="player1" ng-class="{oclass: playerPic1=='O', xclass: playerPic1=='X', r: playerPic1=='R', z:playerPic1=='Z', l:playerPic1=='L', f:playerPic1=='F', g:playerPic1=='G', m:playerPic1=='M', a:playerPic1=='A'}">
         </div>
 
+        VS
 
+        <div class="player2" ng-class="{oclass: playerPic2=='O', xclass: playerPic2=='X', r: playerPic2=='R', z:playerPic2=='Z', l:playerPic2=='L', f:playerPic2=='F', g:playerPic2=='G', m:playerPic2=='M', a:playerPic2=='A'}">
         </div>
+      </div>
 
-		
-
-
-	</div>
+      <div class="wrapper3"> <!-- teachers to choose from -->
+        <div class="weapons" ng-click="playerSelect(i)" ng-repeat="i in pictures">
+          <img ng-src="{{i.photos}}">
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
 
